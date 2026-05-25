@@ -10,7 +10,7 @@ router.post("/product", async (req, res) => {
 });
 
 // READ ALL
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
