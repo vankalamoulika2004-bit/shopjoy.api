@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../shopjoy"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../frontend"
+		}
+	],
+	"settings": {}
+}
