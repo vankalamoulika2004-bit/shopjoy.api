@@ -1,30 +1,30 @@
 const express = require("express");
 const dotenv = require("dotenv");
-
-const connectDB = require("./config/db");
-const UserRoutes = require("./routes/UserRoutes.js");
-const dns = require("dns");
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
 const cors = require("cors");
 
-// Load .env
+const connectDB = require("./config/db");
+const UserRoutes = require("./routes/UserRoutes");
+
 dotenv.config();
 
-// Initialize Express
-const app = express();
-// Enable CORS
-app.use(cors());
-
-// Middleware
-app.use(express.json());
-
-// Database Connection
 connectDB();
 
-// Routes
-app.use("/", UserRoutes);
+const app = express();
 
-// Server
-app.listen(process.env.PORT, () => {
-    console.log(`Server Started on Port ${process.env.PORT}`);
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use("/api/products", UserRoutes);
+
+// Test Route
+app.get("/", (req, res) => {
+  res.send("ShopJoy API Running...");
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server Started on Port ${PORT}`);
 });

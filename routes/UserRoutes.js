@@ -3,42 +3,103 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-// CREATE
+
+// CREATE PRODUCT
 router.post("/product", async (req, res) => {
-  const user = await User.create(req.body);
-  res.json(user);
+  try {
+    const product = await User.create(req.body);
+
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
-// READ ALL
+
+// GET ALL PRODUCTS
 router.get("/", async (req, res) => {
-  const users = await User.find();
-  res.json(users);
+  try {
+    const products = await User.find();
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
-// READ ONE
+
+// GET SINGLE PRODUCT
 router.get("/product/:id", async (req, res) => {
-  const user = await User.findById(req.params.id);
-  res.json(user);
+  try {
+    const product = await User.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
-// UPDATE
+
+// UPDATE PRODUCT
 router.put("/updateProduct/:id", async (req, res) => {
-  const user = await User.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  try {
+    const product = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
-  res.json(user);
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
-// DELETE
-router.delete("/deleteProduct/:id", async (req, res) => {
-  await User.findByIdAndDelete(req.params.id);
 
-  res.json({
-    message: "User Deleted",
-  });
+// DELETE PRODUCT
+router.delete("/deleteProduct/:id", async (req, res) => {
+  try {
+    const product = await User.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "Product Deleted Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
 module.exports = router;
