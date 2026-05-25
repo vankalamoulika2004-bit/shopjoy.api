@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
-const UserRoutes = require("./routes/UserRoutes");
+const UserRoutes = require("./routes/UserRoutes.js");
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 const cors = require("cors");
