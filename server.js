@@ -20,7 +20,7 @@ app.use("/api/products", UserRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
-  res.send("ShopJoy API Running...");
+  res.send();
 });
 
 const PORT = process.env.PORT || 5000;
