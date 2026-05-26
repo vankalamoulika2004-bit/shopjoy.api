@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/products", UserRoutes);
 
 // Test Route
